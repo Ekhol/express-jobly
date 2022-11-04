@@ -1,0 +1,125 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [],
+    "properties": {
+        "minEmployees": {
+            "type": "object",
+            "default": {},
+            "title": "The minEmployees Schema",
+            "required": [
+                "type",
+                "minimum"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The type Schema",
+                    "examples": [
+                        "integer"
+                    ]
+                },
+                "minimum": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The minimum Schema",
+                    "examples": [
+                        0
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            ]
+        },
+        "maxEmployees": {
+            "type": "object",
+            "default": {},
+            "title": "The maxEmployees Schema",
+            "required": [
+                "type",
+                "minimum"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The type Schema",
+                    "examples": [
+                        "integer"
+                    ]
+                },
+                "minimum": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The minimum Schema",
+                    "examples": [
+                        0
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            ]
+        },
+        "name": {
+            "type": "object",
+            "default": {},
+            "title": "The name Schema",
+            "required": [
+                "type",
+                "minLength"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The type Schema",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "minLength": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The minLength Schema",
+                    "examples": [
+                        1
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "type": "string",
+                    "minLength": 1
+                }
+            ]
+        }
+    },
+    "examples": [
+        {
+            "minEmployees": {
+                "type": "integer",
+                "minimum": 0
+            },
+            "maxEmployees": {
+                "type": "integer",
+                "minimum": 0
+            },
+            "name": {
+                "type": "string",
+                "minLength": 1
+            }
+        }
+    ]
+}

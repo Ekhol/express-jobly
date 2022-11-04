@@ -50,16 +50,55 @@ class Company {
    * */
 
   static async findAll(searchFilter = {}) {
+    // Adding the search filter parameters to the class function.
     const { minEmployees, maxEmployees, name } = searchFilter;
+    // This is the query string that we will append to with the query filters.
     let companiesRes =
       `SELECT handle,
                   name,
                   description,
                   num_employees AS "numEmployees",
                   logo_url AS "logoUrl"
-           FROM companies
-           ORDER BY name`;
+           FROM companies`;
+    // Empty arrays that we will append with filter values and SQL statements.
+    let sqlQuery = [];
+    let queryVal = [];
 
+    // If fed a value for the name filter, appending the query value with the name we're searching
+    // and adding a SQL ILIKE statement to the sql array to append to the original statement.
+    if (name) {
+      queryVal.push(`%${name}%`);
+      sqlQuery.push(`name ILIKE $${queryVal.length}`);
+    }
+
+    // Throwing error if the minimum employees exceeds maximum.
+    if (minEmployees > maxEmployees) {
+      throw new BadRequestError("Minimum employees cannot exceed maximum employees");
+    }
+
+    // If min/max employees are a valid integer, we're pushing the value for min/max employees to the query value
+    // and pushing a SQL statement to the query to append to the original statement.
+    if (minEmployees !== undefined) {
+      queryVal.push(minEmployees);
+      sqlQuery.push(`num_employees >= $${queryVal.length}`);
+    }
+
+    if (maxEmployees !== undefined) {
+      queryVal.push(maxEmployees);
+      sqlQuery.push(`num_employees <= $${queryVal.length}`);
+    }
+
+    // Putting the original SQL statement together with the values and queries that we pushed into the 
+    // above arrays. 
+    if (sqlQuery.length > 0) {
+      companiesRes += " WHERE " + sqlQuery.join(" AND ");
+    }
+
+    companiesRes += " ORDER BY name";
+
+    // Submitting the completed SQL query to the database.
+    const result = await db.query(companiesRes, queryVal);
+    return result.rows;
   }
 
   /** Given a company handle, return data about company.
