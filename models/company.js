@@ -49,9 +49,8 @@ class Company {
    * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
    * */
 
-  static async findAll(searchFilter = {}) {
+  static async findAll({ minEmployees, maxEmployees, name } = {}) {
     // Adding the search filter parameters to the class function.
-    const { minEmployees, maxEmployees, name } = searchFilter;
     // This is the query string that we will append to with the query filters.
     let companiesRes =
       `SELECT handle,
