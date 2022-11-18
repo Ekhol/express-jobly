@@ -23,7 +23,7 @@ afterAll(commonAfterAll);
 /************************************** authenticate */
 
 describe("authenticate", function () {
-  test("works", async function () {
+  test.only("works", async function () {
     const user = await User.authenticate("u1", "password1");
     expect(user).toEqual({
       username: "u1",
